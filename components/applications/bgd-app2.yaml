@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: bgd-app
-  namespace: openshift-gitops
+  namespace: argocd
 spec:
   destination:
     namespace: bgd
-    server: https://kubernetes.default.svc
+    server: https://api.ocp4-cluster-001.int.dhdigital.co.in:6443
   project: default
   source:
     path: apps/bgd/overlays/bgd
