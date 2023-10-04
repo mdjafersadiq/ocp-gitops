@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     namespace: bgd
-    server: https://api.ocp4-cluster-001.int.dhdigital.co.in:6443
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: apps/bgd/overlays/bgd
