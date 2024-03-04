@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+  namespace: mw-sit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: middleware-configstoreconnector
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: middleware-configstoreconnector
+        deployment: middleware-configstoreconnector
+    spec:
+      containers:
+        - name: middleware-configstoreconnector
+          image: 'image-registry.openshift-image-registry.svc:5000/mw/middleware-configstoreconnector@sha256:fdbcd2ac8326fa40ebb2e58fea867a716ceeda072d784378554519298f2be717'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8778
+              protocol: TCP
+          env:
+            - name: APPDB_URL
+              value: 'jdbc:oracle:thin:@192.168.50.10:1521:orcl?autoReconnect=true&useSSL=false'
+            - name: APPDB_URL_USERNAME
+              value: BPM_APPDB
+            - name: APPDB_URL_PASSWORD
+              value: BPM_AppDB
+            - name: JAEGER_SERVICE_NAME
+              value: CONFIGSTORE_CONNECTOR
+            - name: JAEGER_ENDPOINT
+              value: 'https://jaeger-istio-system.apps.ocp4-cluster-001.int.dhdigital.co.in'
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
