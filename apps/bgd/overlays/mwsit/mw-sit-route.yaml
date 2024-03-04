@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: configstore-connector
+  name: configstore-connector
+  namespace: mw-sit
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: configstore-connector
+    weight: 100
