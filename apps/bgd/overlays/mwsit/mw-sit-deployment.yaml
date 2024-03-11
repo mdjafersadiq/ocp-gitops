@@ -18,7 +18,7 @@ spec:
         app: configstore-connector
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/mw/middleware-configstoreconnector@sha256:fdbcd2ac8326fa40ebb2e58fea867a716ceeda072d784378554519298f2be717
+      - image: image-registry.openshift-image-registry.svc:5000/mw/middleware-configstoreconnector@sha256:fdbcd2ac8326fa40ebb2e58fea867a716ceeda072d784378554519298f2be71
         name: configstore-connector
         env:
             - name: APPDB_URL
